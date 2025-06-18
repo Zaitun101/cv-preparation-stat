@@ -1,0 +1,11 @@
+*.log
+*__pycache__
+venv
+.vscode
+.venv
+*.xml
+*.iml
+.idea
+.ruff_cache
+.env
+my_logs
