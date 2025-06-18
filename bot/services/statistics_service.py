@@ -1,4 +1,3 @@
-import pandas as pd
 
 from analytics.analytics import Analytics
 from databases.mongo import Mongo
@@ -12,7 +11,7 @@ class StatisticsService:
     def get_general_statistics(self, events: list) -> list[str]:
         stats = self.analytics.get_general_analytics(events)
         report_lines = [
-            f'📊 Общая статистика:',
+            '📊 Общая статистика:',
             f'   🤖 всего запусков бота: {stats["total_runs"]}',
             f'   🤖 bot_result событий: {stats["bot_results"]}',
             f'   🤖 bot_attempt событий: {stats["bot_attempts"]}',
