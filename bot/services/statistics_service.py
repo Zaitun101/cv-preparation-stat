@@ -1,4 +1,3 @@
-
 from analytics.analytics import Analytics
 from databases.mongo import Mongo
 
@@ -111,6 +110,10 @@ class StatisticsService:
             title='Статистика по серверам',
             item_title='Сервер',
         )
+
+    def get_alert_general_statistics(self, events: list) -> float:
+        stats = self.analytics.get_general_analytics(events)
+        return round(float(stats['fail_percent']), 1)
 
     def start(self):
         hours = int(input('За сколько часов смотреть статистику: '))
