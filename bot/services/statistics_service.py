@@ -111,9 +111,17 @@ class StatisticsService:
             item_title='Сервер',
         )
 
-    def get_alert_general_statistics(self, events: list) -> float:
+    def get_alert_general_statistics(
+        self, events: list
+    ) -> list[int, int, float, int, float]:
         stats = self.analytics.get_general_analytics(events)
-        return round(float(stats['fail_percent']), 1)
+        return [
+            stats['bot_results'],
+            stats['success_count'],
+            round(stats['success_percent'], 1),
+            stats['fail_count'],
+            round(stats['fail_percent'], 1),
+        ]
 
     def start(self):
         hours = int(input('За сколько часов смотреть статистику: '))

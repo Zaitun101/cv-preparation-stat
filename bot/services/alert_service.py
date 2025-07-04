@@ -13,18 +13,26 @@ class AlertService:
         self.statistics = StatisticsService()
 
     async def check_alerts(self):
-        events = self.statistics.mongo.get_events(2)
+        events = self.statistics.mongo.get_events(20)
         if not events:
             return
 
         general_alert = self.statistics.get_alert_general_statistics(events)
+        bot_result = general_alert[0]
+        success_count = general_alert[1]
+        success_percent = general_alert[2]
+        fail_count = general_alert[3]
+        fail_percent = general_alert[4]
         game_alerts = self.statistics.get_game_statistics(events)
         server_alerts = self.statistics.get_server_statistics(events)
 
         alerts = []
 
-        if general_alert > 25:
-            alerts.append(f'❌ Процент отмен прогрева больше {general_alert}%')
+        if bot_result >= 20:
+            if fail_percent >= 25:
+                alerts.append(
+                    f'✅ {success_count} — {success_percent}% | ❌ {fail_count} — {fail_percent}%'
+                )
 
         for lines in (game_alerts, server_alerts):
             section = '\n'.join(lines)
